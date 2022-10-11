@@ -9,14 +9,13 @@ snd_dir = path.join(path.dirname(__file__), 'snd')
 
 WIGHT = 600
 HEIGHT = 600
+BLOCK = 30
 FPS = 2
 
-BLOCK = 30
-
 BLACK = (0, 0, 0)
-ORANGE = (255, 165, 0)
+# ORANGE = (255, 165, 0)
 RED = (255, 0, 0)
-YELLOY = (250, 255, 0)
+# YELLOY = (250, 255, 0)
 MAROON = (255, 52, 179)
 GREEN = (0, 238, 118)
 
@@ -25,7 +24,6 @@ y_snake = HEIGHT / 2
 snake = [(x_snake, y_snake)]
 len_snake = 1
 apple = random.randrange(BLOCK, WIGHT - BLOCK, BLOCK), random.randrange(BLOCK, WIGHT - BLOCK, BLOCK)
-
 
 x_change = 0
 y_change = 0
@@ -51,12 +49,8 @@ screen = pygame.display.set_mode((WIGHT, HEIGHT))
 pygame.display.set_caption('Змейка')
 background = pygame.image.load(path.join(img_dir, 'background.png')).convert()
 background_rect = background.get_rect()
-
-clock = pygame.time.Clock()
-
 font_score = pygame.font.SysFont('comicsansms', 20)
-
-font_style = pygame.font.SysFont('comicsansms', 60)
+clock = pygame.time.Clock()
 
 
 running = True
@@ -109,6 +103,7 @@ while running:
     if x_snake >= WIGHT or x_snake < 0 or y_snake >= HEIGHT or y_snake < 0 or len(snake) != len(set(snake)):
         s_crash.play()
         running = False
+        print("Game over")
 
     x_snake += x_change
     y_snake += y_change
@@ -121,7 +116,7 @@ while running:
         score += 1
         FPS += 0.5
         s_eat.play()
-
+        print("Yum yum!")
 
     screen.fill(BLACK)
     screen.blit(background, background_rect)
@@ -129,7 +124,7 @@ while running:
     [pygame.draw.rect(screen, GREEN, (i, j, BLOCK - 1, BLOCK - 1)) for i, j in snake]
     pygame.draw.rect(screen, RED, [*apple, BLOCK, BLOCK])
 
-    render_score = font_score.render(f'Съеденые яблоки: {score}', 1, MAROON)
+    render_score = font_score.render(f'Score: {score}', True, MAROON)
     screen.blit(render_score, (5, 5))
 
     pygame.display.flip()
