@@ -9,7 +9,7 @@ snd_dir = path.join(path.dirname(__file__), 'snd')
 
 WIGHT = 600
 HEIGHT = 600
-FPS = 5
+FPS = 2
 
 BLOCK = 30
 
@@ -30,7 +30,7 @@ apple = random.randrange(BLOCK, WIGHT - BLOCK, BLOCK), random.randrange(BLOCK, W
 x_change = 0
 y_change = 0
 
-vol = 0.0
+vol = 0.5
 score = 0
 
 direction = 'RIGHT'
@@ -57,23 +57,7 @@ clock = pygame.time.Clock()
 font_score = pygame.font.SysFont('comicsansms', 20)
 
 font_style = pygame.font.SysFont('comicsansms', 60)
-def message_1(msg,color):
-    '''Visualizes the message on the screen'''
-    msg = font_style.render(msg, True, color)
-    screen.blit(msg, [WIGHT / 6, HEIGHT / 7.5])
 
-font_style_2 = pygame.font.SysFont('comicsansms', 80)
-def message_2(msg,color):
-    '''Visualizes the message on the screen
-    :param msg: the message that needs to be visualized
-    :type msg: pygame.Surface
-    :param color: message color
-    :type color: tuple
-
-    :return: Visualizes the message on the screen
-    '''
-    msg = font_style_2.render(msg, True, color)
-    screen.blit(msg, [WIGHT / 6, HEIGHT / 3])
 
 running = True
 while running:
@@ -98,7 +82,6 @@ while running:
 
             if event.key == pygame.K_UP or event.key == ord('w'):
                 change_to = 'UP'
-
             if event.key == pygame.K_DOWN or event.key == ord('s'):
                 change_to = 'DOWN'
             if event.key == pygame.K_LEFT or event.key == ord('a'):
@@ -106,7 +89,6 @@ while running:
             if event.key == pygame.K_RIGHT or event.key == ord('d'):
                 change_to = 'RIGHT'
 
-            # Making sure the snake cannot move in the opposite direction instantaneously
         if change_to == 'UP' and direction != 'DOWN':
             direction = 'UP'
             y_change = - BLOCK
@@ -137,7 +119,7 @@ while running:
         apple = random.randrange(BLOCK, WIGHT - BLOCK, BLOCK), random.randrange(BLOCK, WIGHT - BLOCK, BLOCK)
         len_snake += 1
         score += 1
-        FPS += 1
+        FPS += 0.5
         s_eat.play()
 
 
@@ -153,8 +135,6 @@ while running:
     pygame.display.flip()
     clock.tick(FPS)
 
-message_1("Вы проиграли", RED)
-message_2("¯\_(ツ)_/¯", YELLOY)
 
 pygame.display.update()
 time.sleep(2)
